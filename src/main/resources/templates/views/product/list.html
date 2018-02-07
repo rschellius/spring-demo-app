@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/head :: head"></head>
+<body>
+
+    <!-- Header -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>List of products</h1>
+        </div>
+        <p>More info here.</p>
+
+        <div th:if="${products.empty}">
+            <p>No products were found.</p>
+        </div>
+
+        <table th:if="!${products.empty}" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}">1</td>
+                    <td><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">Name</a></td>
+                    <td th:text="${product.description}">Description</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <div th:replace="fragments/footer :: footer"></div>
+    </footer>
+</body>
+</html>

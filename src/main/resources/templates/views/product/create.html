@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/head :: head"></head>
+<body>
+
+<!-- Header -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Create Product</h1>
+        </div>
+        <p>Add a product</p>
+
+        <form id="createProductForm"
+              action="#" th:action="@{/product/new}"
+              th:object="${product}" method="post">
+
+            <!-- Het formulier wordt na verzenden gevalideerd in de MemberController.
+                Als er fouten waren kun je hier een lijst met foutmeldingen tonen.
+                Je kunt ook de melding bij het inputveld tonen (zie code hieronder) en evt. de CSS class
+                van het inputveld veranderen. -->
+            <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+
+            <div th:if="${#fields.hasErrors('*')}">
+                <div th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                    <th:block layout:fragment="alert-summary">
+                        <p>Niet alle velden in het formulier zijn correct ingevuld. Corrigeer deze en verzend opnieuw.</p>
+                    </th:block>
+                </div>
+            </div>
+
+            <input type="hidden"
+                   th:field="*{id}"
+                   th:class="${#fields.hasErrors('id')} ? 'field-error'" />
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'repository'-->
+                        <input type="text" class="form-control" id="name" th:field="*{name}"/>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'repository'-->
+                        <input type="text" class="form-control" id="description" th:field="*{description}"/>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
+                    </div>
+                </div>
+            </div>
+            <!-- De button die voor verzenden van het formulier zorgt.
+                De name 'save' is een parameter waarmee in de MemberController de juiste
+                save-actie wordt gestart. -->
+            <button type="submit" class="btn btn-primary" name="save">Submit</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div th:replace="fragments/footer :: footer"></div>
+    </footer>
+</body>
+</html>
