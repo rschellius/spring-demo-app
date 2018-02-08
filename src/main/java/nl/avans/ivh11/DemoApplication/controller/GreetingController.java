@@ -1,4 +1,4 @@
-package nl.avans.ivh11.DemoApplication.controller;
+package nl.avans.ivh11.demoapplication.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class GreetingController {
     @RequestMapping("/greeting")
     public String greeting(
             @RequestParam(value="name", required=false, defaultValue="World") String name,
-            Model model) {
+            Model model) throws Exception {
         model.addAttribute("name", name);
         return "views/greeting/greeting";
     }

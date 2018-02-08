@@ -1,7 +1,8 @@
-package nl.avans.ivh11.DemoApplication.controller;
+package nl.avans.ivh11.demoapplication.controller;
 
-import nl.avans.ivh11.DemoApplication.domain.Product;
-import nl.avans.ivh11.DemoApplication.service.ProductService;
+import nl.avans.ivh11.demoapplication.common.exception.ProductNotFoundException;
+import nl.avans.ivh11.demoapplication.domain.Product;
+import nl.avans.ivh11.demoapplication.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/products")
 public class ProductController {
 
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -52,7 +53,11 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ModelAndView view(@PathVariable("id") Product product) {
+    public ModelAndView viewProduct(@PathVariable("id") Product product)
+            throws ProductNotFoundException {
+        if(null == product) {
+            throw new ProductNotFoundException("Product niet gevonden!");
+        }
         return new ModelAndView(VIEW_READ_PRODUCT, "product", product);
     }
 
@@ -74,17 +79,10 @@ public class ProductController {
             return new ModelAndView(VIEW_CREATE_PRODUCT, "formErrors", bindingResult.getAllErrors());
         }
 
-        //
-        // ToDo: volgende acties naar de servicelaag verplaatsen.
-        //
-
         product = productService.createProduct(product);
 
-//        redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
-//        return new ModelAndView("redirect:/product/{product.id}", "product.id", product.getId());
-
-        products = productService.getProducts();
-        return new ModelAndView(VIEW_LIST_PRODUCTS, "products", products);
+        redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
+        return new ModelAndView("redirect:/products/{product.id}", "product.id", product.getId());
     }
 
     @GetMapping(value = "{id}/edit")

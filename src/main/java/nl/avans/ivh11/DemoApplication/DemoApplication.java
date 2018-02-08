@@ -1,4 +1,4 @@
-package nl.avans.ivh11.DemoApplication;
+package nl.avans.ivh11.demoapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

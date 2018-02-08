@@ -1,7 +1,7 @@
-package nl.avans.ivh11.DemoApplication.service;
+package nl.avans.ivh11.demoapplication.service;
 
-import nl.avans.ivh11.DemoApplication.domain.Product;
-import nl.avans.ivh11.DemoApplication.repository.ProductRepository;
+import nl.avans.ivh11.demoapplication.domain.Product;
+import nl.avans.ivh11.demoapplication.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
